@@ -1,0 +1,11 @@
+scrape_configs:
+  - job_name: 'application'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ 'host.docker.internal:2112' ]
+
+remote_write:
+- url: << URL >>
+  basic_auth:
+    username: << USERNAME >>
+    password: << API-KEY >>
