@@ -77,8 +77,6 @@ func setCurrentEur() {
 
 		currentCurrencyMetric.WithLabelValues().Set(currentEur)
 
-		time.Sleep(2 * time.Second)
-
 		if currentEur == 0 {
 			day--
 		}
