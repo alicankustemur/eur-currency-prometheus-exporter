@@ -1,4 +1,4 @@
-module github.com/alicankustemur/enpara-eur-prometheus-exporter/tcmb
+module github.com/alicankustemur/eur-currency-prometheus-exporter/tcmb
 
 go 1.19
 

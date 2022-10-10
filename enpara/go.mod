@@ -1,4 +1,4 @@
-module github.com/alicankustemur/enpara-eur-prometheus-exporter/enpara
+module github.com/alicankustemur/eur-currency-prometheus-exporter/enpara
 
 go 1.19
 

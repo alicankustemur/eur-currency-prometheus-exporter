@@ -1,10 +1,10 @@
-module github.com/alicankustemur/enpara-eur-prometheus-exporter
+module github.com/alicankustemur/eur-currency-prometheus-exporter
 
 go 1.18
 
 require (
-	github.com/alicankustemur/enpara-eur-prometheus-exporter/enpara v0.0.0-00010101000000-000000000000
-	github.com/alicankustemur/enpara-eur-prometheus-exporter/tcmb v0.0.0-00010101000000-000000000000
+	github.com/alicankustemur/eur-currency-prometheus-exporter/enpara v0.0.0-00010101000000-000000000000
+	github.com/alicankustemur/eur-currency-prometheus-exporter/tcmb v0.0.0-00010101000000-000000000000
 	github.com/prometheus/client_golang v1.13.0
 )
 
@@ -23,6 +23,6 @@ require (
 	google.golang.org/protobuf v1.28.1 // indirect
 )
 
-replace github.com/alicankustemur/enpara-eur-prometheus-exporter/enpara => ./enpara
+replace github.com/alicankustemur/eur-currency-prometheus-exporter/enpara => ./enpara
 
-replace github.com/alicankustemur/enpara-eur-prometheus-exporter/tcmb => ./tcmb
+replace github.com/alicankustemur/eur-currency-prometheus-exporter/tcmb => ./tcmb

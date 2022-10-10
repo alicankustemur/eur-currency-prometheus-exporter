@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/alicankustemur/enpara-eur-prometheus-exporter/enpara"
-	"github.com/alicankustemur/enpara-eur-prometheus-exporter/tcmb"
+	"github.com/alicankustemur/eur-currency-prometheus-exporter/enpara"
+	"github.com/alicankustemur/eur-currency-prometheus-exporter/tcmb"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
