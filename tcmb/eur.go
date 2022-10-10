@@ -59,10 +59,8 @@ func setCurrentEur() {
 
 		}
 
-		time.Sleep(2 * time.Second)
-
 		currentCurrencyMetric.WithLabelValues().Set(currentEur)
-
+		time.Sleep(2 * time.Hour)
 	}
 
 }
