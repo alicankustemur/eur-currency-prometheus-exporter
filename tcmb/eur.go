@@ -31,13 +31,21 @@ var currentEur float64
 
 func setCurrentEur() {
 
+	t := time.Now()
+
+	day := time.Now().Day()
+
+	dayStr := fmt.Sprintf("%d", day)
+
+	url := fmt.Sprintf("https://www.tcmb.gov.tr/kurlar/%d%d/%s%d%d.xml", t.Year(), t.Month(), dayStr, t.Month(), t.Year())
+
 	for {
 
-		t := time.Now()
+		if day <= 9 {
+			dayStr = fmt.Sprintf("0%d", day)
+		}
 
-		day := time.Now().Day()
-
-		url := fmt.Sprintf("https://www.tcmb.gov.tr/kurlar/%d%d/%d%d%d.xml", t.Year(), t.Month(), day, t.Month(), t.Year())
+		url = fmt.Sprintf("https://www.tcmb.gov.tr/kurlar/%d%d/%s%d%d.xml", t.Year(), t.Month(), dayStr, t.Month(), t.Year())
 
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
@@ -46,7 +54,15 @@ func setCurrentEur() {
 
 		res, err := http.DefaultClient.Do(req)
 
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		data, err := ioutil.ReadAll(res.Body)
+
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		var result Base
 		xml.Unmarshal(data, &result)
@@ -60,6 +76,13 @@ func setCurrentEur() {
 		}
 
 		currentCurrencyMetric.WithLabelValues().Set(currentEur)
+
+		time.Sleep(2 * time.Second)
+
+		if currentEur == 0 {
+			day--
+		}
+
 		time.Sleep(2 * time.Hour)
 	}
 
