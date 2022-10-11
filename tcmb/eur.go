@@ -33,17 +33,17 @@ func setCurrentEur() {
 
 	t := time.Now()
 
-	day := time.Now().Day()
-	today := time.Now().Day()
+	day := t.Day()
+	today := t.Day()
 
 	for {
 
-		dayStr := fmt.Sprintf("%d", day) // 10
+		dayStr := fmt.Sprintf("%d", day)
 
 		if day <= 9 {
 			dayStr = fmt.Sprintf("0%d", day)
 		}
-		url := fmt.Sprintf("https://www.tcmb.gov.tr/kurlar/%d%d/%s%d%d.xml", t.Year(), t.Month(), dayStr, t.Month(), t.Year()) // 10
+		url := fmt.Sprintf("https://www.tcmb.gov.tr/kurlar/%d%d/%s%d%d.xml", t.Year(), t.Month(), dayStr, t.Month(), t.Year())
 
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
