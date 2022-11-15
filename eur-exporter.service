@@ -1,0 +1,14 @@
+[Unit]
+Description=Euro Prometheus Exporter
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=forking
+Restart=always
+RestartSec=1
+User=exporter
+Group=exporter
+ExecStart=/home/exporter/eur-currency-prometheus-exporter/update-and-restart.sh
+
+[Install]
+WantedBy=multi-user.target
