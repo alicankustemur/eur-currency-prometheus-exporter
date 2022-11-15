@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/alicankustemur/eur-currency-prometheus-exporter/dovizcom"
+	"github.com/alicankustemur/eur-currency-prometheus-exporter/enpara"
 	"github.com/alicankustemur/eur-currency-prometheus-exporter/tcmb"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -12,7 +13,13 @@ import (
 
 func main() {
 
-	err := prometheus.Register(dovizcom.CurrentEur())
+	err := prometheus.Register(enpara.CurrentEur())
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = prometheus.Register(dovizcom.CurrentEur())
 
 	if err != nil {
 		log.Fatal(err)
