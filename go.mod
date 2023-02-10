@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/alicankustemur/eur-currency-prometheus-exporter/dovizcom v0.0.0-00010101000000-000000000000
 	github.com/alicankustemur/eur-currency-prometheus-exporter/enpara v0.0.0-00010101000000-000000000000
+	github.com/alicankustemur/eur-currency-prometheus-exporter/kuveytturk v0.0.0-00010101000000-000000000000
 	github.com/alicankustemur/eur-currency-prometheus-exporter/tcmb v0.0.0-00010101000000-000000000000
 	github.com/prometheus/client_golang v1.14.0
 )
@@ -29,3 +30,5 @@ replace github.com/alicankustemur/eur-currency-prometheus-exporter/enpara => ./e
 replace github.com/alicankustemur/eur-currency-prometheus-exporter/tcmb => ./tcmb
 
 replace github.com/alicankustemur/eur-currency-prometheus-exporter/dovizcom => ./dovizcom
+
+replace github.com/alicankustemur/eur-currency-prometheus-exporter/kuveytturk => ./kuveytturk
