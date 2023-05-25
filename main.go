@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/alicankustemur/eur-currency-prometheus-exporter/dovizcom"
 	"github.com/alicankustemur/eur-currency-prometheus-exporter/enpara"
 	"github.com/alicankustemur/eur-currency-prometheus-exporter/kuveytturk"
 	"github.com/alicankustemur/eur-currency-prometheus-exporter/tcmb"
@@ -15,12 +14,6 @@ import (
 func main() {
 
 	err := prometheus.Register(enpara.CurrentEur())
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = prometheus.Register(dovizcom.CurrentEur())
 
 	if err != nil {
 		log.Fatal(err)
