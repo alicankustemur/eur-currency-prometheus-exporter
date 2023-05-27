@@ -7,6 +7,7 @@ import (
 	"github.com/alicankustemur/eur-currency-prometheus-exporter/enpara"
 	"github.com/alicankustemur/eur-currency-prometheus-exporter/kuveytturk"
 	"github.com/alicankustemur/eur-currency-prometheus-exporter/tcmb"
+	"github.com/alicankustemur/eur-currency-prometheus-exporter/canlidoviz"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
@@ -26,6 +27,12 @@ func main() {
 	}
 
 	err = prometheus.Register(kuveytturk.CurrentEur())
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	
+	err = prometheus.Register(canlidoviz.CurrentEur())
 
 	if err != nil {
 		log.Fatal(err)
