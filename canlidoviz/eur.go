@@ -39,6 +39,7 @@ func setCurrentEur() {
 		doc.Find(".page").Each(func(i int, s *goquery.Selection) {
 			eurText := strings.Replace(s.Find("tbody").Find("tr[data-code='EUR']").Find("td.text-primary").First().Text(), " ", "", -1)
 			eurText = strings.Replace(eurText, "\n", "", -1)
+			eurText = strings.Replace(eurText, ",", ".", -1)
 			currentEur, err = strconv.ParseFloat(eurText, 64)
 		})
 
