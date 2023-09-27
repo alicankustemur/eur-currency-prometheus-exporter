@@ -4,7 +4,7 @@ clone the repo and build the project
 ```
 git clone https://github.com/alicankustemur/eur-currency-prometheus-exporter
 cd eur-currency-prometheus-exporter
-git build .
+go build .
 ```
 
 Create an `exporter.sh` file
