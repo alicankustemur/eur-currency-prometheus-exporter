@@ -3,8 +3,7 @@ module github.com/alicankustemur/eur-currency-prometheus-exporter
 go 1.18
 
 require (
-	github.com/alicankustemur/eur-currency-prometheus-exporter/canlidoviz v0.0.0-00010101000000-000000000000
-	github.com/alicankustemur/eur-currency-prometheus-exporter/enpara v0.0.0-00010101000000-000000000000
+	github.com/alicankustemur/eur-currency-prometheus-exporter/dovizcom v0.0.0-00010101000000-000000000000
 	github.com/alicankustemur/eur-currency-prometheus-exporter/kuveytturk v0.0.0-00010101000000-000000000000
 	github.com/alicankustemur/eur-currency-prometheus-exporter/tcmb v0.0.0-00010101000000-000000000000
 	github.com/prometheus/client_golang v1.15.1
@@ -28,7 +27,7 @@ require (
 	google.golang.org/protobuf v1.30.0 // indirect
 )
 
-replace github.com/alicankustemur/eur-currency-prometheus-exporter/enpara => ./enpara
+replace github.com/alicankustemur/eur-currency-prometheus-exporter/dovizcom => ./dovizcom
 
 replace github.com/alicankustemur/eur-currency-prometheus-exporter/tcmb => ./tcmb
 
