@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/alicankustemur/eur-currency-prometheus-exporter/dovizcom"
+	"github.com/alicankustemur/eur-currency-prometheus-exporter/dovizcom_kapalicarsi"
 	"github.com/alicankustemur/eur-currency-prometheus-exporter/kuveytturk"
 	"github.com/alicankustemur/eur-currency-prometheus-exporter/tcmb"
 	"github.com/prometheus/client_golang/prometheus"
@@ -26,6 +27,11 @@ func main() {
 	}
 
 	err = prometheus.Register(dovizcom.CurrentEur())
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = prometheus.Register(dovizcom_kapalicarsi.CurrentEur())
 
 	if err != nil {
 		log.Fatal(err)
