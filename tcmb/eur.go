@@ -53,6 +53,8 @@ func setCurrentEur() {
 			log.Fatal(err)
 		}
 
+		time.Sleep(3 * time.Second)
+
 		res, err := http.DefaultClient.Do(req)
 
 		if res.StatusCode == 404 {
