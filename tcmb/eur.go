@@ -3,7 +3,7 @@ package tcmb
 import (
 	"encoding/xml"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"time"
@@ -27,14 +27,12 @@ var currentCurrencyMetric = prometheus.NewGaugeVec(prometheus.GaugeOpts{
 	Help: "Currency Prices of TCMB",
 }, []string{})
 
-var currentEur float64
+var httpClient = &http.Client{Timeout: 30 * time.Second}
 
 func setCurrentEur() {
-
 	t := time.Now()
 
 	for {
-
 		dayStr := fmt.Sprintf("%d", t.Day())
 		monthStr := fmt.Sprintf("%d", t.Month())
 
@@ -50,44 +48,46 @@ func setCurrentEur() {
 
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
-			log.Fatal(err)
-		}
-
-		time.Sleep(3 * time.Second)
-
-		res, err := http.DefaultClient.Do(req)
-
-		if res.StatusCode == 404 {
-			t = t.AddDate(0, 0, -1)
+			log.Println("tcmb: error creating request:", err)
+			time.Sleep(1 * time.Minute)
 			continue
 		}
 
+		res, err := httpClient.Do(req)
 		if err != nil {
-			log.Fatal(err)
+			log.Println("tcmb: error fetching:", err)
+			time.Sleep(1 * time.Minute)
+			continue
 		}
 
-		data, err := ioutil.ReadAll(res.Body)
+		if res.StatusCode == 404 {
+			res.Body.Close()
+			t = t.AddDate(0, 0, -1)
+			time.Sleep(3 * time.Second)
+			continue
+		}
+
+		data, err := io.ReadAll(res.Body)
+		res.Body.Close()
 
 		if err != nil {
-			log.Fatal(err)
+			log.Println("tcmb: error reading body:", err)
+			time.Sleep(1 * time.Minute)
+			continue
 		}
 
 		var result Base
 		xml.Unmarshal(data, &result)
 
 		for _, currency := range result.Currency {
-
 			if currency.CurrencyName == "EURO" {
-				currentEur = currency.ForexBuying
+				currentCurrencyMetric.WithLabelValues().Set(currency.ForexBuying)
 			}
-
 		}
 
-		currentCurrencyMetric.WithLabelValues().Set(currentEur)
 		time.Sleep(1 * time.Hour)
 		t = time.Now()
 	}
-
 }
 
 func CurrentEur() *prometheus.GaugeVec {

@@ -16,40 +16,46 @@ var currentCurrencyMetric = prometheus.NewGaugeVec(prometheus.GaugeOpts{
 	Help: "Current Currency Price of Enpara",
 }, []string{})
 
+var httpClient = &http.Client{Timeout: 30 * time.Second}
+
 func setCurrentEur() {
-
 	for {
-
 		req, err := http.NewRequest("GET", "https://www.qnbfinansbank.enpara.com/hesaplar/doviz-ve-altin-kurlari", nil)
 		if err != nil {
-			log.Fatal(err)
+			log.Println("enpara: error creating request:", err)
+			time.Sleep(1 * time.Minute)
+			continue
 		}
 
-		res, err := http.DefaultClient.Do(req)
+		res, err := httpClient.Do(req)
+		if err != nil {
+			log.Println("enpara: error fetching:", err)
+			time.Sleep(1 * time.Minute)
+			continue
+		}
 
 		doc, err := goquery.NewDocumentFromReader(res.Body)
+		res.Body.Close()
+
 		if err != nil {
-			log.Fatal(err)
+			log.Println("enpara: error parsing html:", err)
+			time.Sleep(1 * time.Minute)
+			continue
 		}
 
-		defer res.Body.Close()
-
-		var currentEur float64
-
 		doc.Find(".enpara-gold-exchange-rates__table-item").Each(func(i int, s *goquery.Selection) {
-
 			if s.Find("span").First().Text() == `EUR (€)` {
-
 				eurText := strings.Split(s.Find("span").First().Next().Text(), " ")[0]
 				eurText = strings.Replace(eurText, ",", ".", -1)
-				currentEur, err = strconv.ParseFloat(eurText, 64)
+				currentEur, err := strconv.ParseFloat(eurText, 64)
+				if err == nil {
+					currentCurrencyMetric.WithLabelValues().Set(currentEur)
+				}
 			}
 		})
 
-		currentCurrencyMetric.WithLabelValues().Set(currentEur)
-		time.Sleep(5 * time.Second)
+		time.Sleep(1 * time.Minute)
 	}
-
 }
 
 func CurrentEur() *prometheus.GaugeVec {
